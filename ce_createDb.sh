@@ -29,8 +29,9 @@ sqlite3 "$db" "
 
   CREATE TABLE IF NOT EXISTS DIRECTORY(
     dir_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    path TEXT
+    path TEXT UNIQUE NOT NULL
   );
+  INSERT INTO DIRECTORY(path) VALUES('/dev/null');
 
   CREATE TABLE IF NOT EXISTS OPERATION_ENUM(
     op_enum_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,11 +45,8 @@ sqlite3 "$db" "
     date TEXT,
     time TEXT,
     operation INTEGER,
-    from_name TEXT,
-    from_dir INTEGER,
     to_name TEXT,
     to_dir INTEGER,
-    FOREIGN KEY(from_dir) REFERENCES DIRECTORY(dir_id),
     FOREIGN KEY(to_dir) REFERENCES DIRECTORY(dir_id),
     FOREIGN KEY(file_id) REFERENCES FILE(file_id),
     FOREIGN KEY(operation) REFERENCES ENUM(op_enum_id)
