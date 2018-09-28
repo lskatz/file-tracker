@@ -13,6 +13,8 @@ if [ "$path" == "" ]; then
   exit 0
 fi
 
+path=$(realpath $path)
+
 filename=$(basename $path)
 dirname=$(dirname $path)
 filesize=$(wc -c < "$path")
@@ -65,5 +67,6 @@ op_id=$(
     "
   )
 
-echo "Initialized file $path into $db. Operations ID: $op_id"
+echo "Initialized file $path into $db" >&2
+echo "$op_id"
 
