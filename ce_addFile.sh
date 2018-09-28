@@ -41,6 +41,7 @@ dir_id=$(
 if [ "$dir_id" == "" ]; then
   dir_id=$(
     sqlite3 "$db" "
+      PRAGMA foreign_keys=ON;
       INSERT INTO DIRECTORY(path)
         VALUES ('$dirname');
 
@@ -52,16 +53,17 @@ fi
 # File operation table
 op_id=$(
   sqlite3 "$db" "
-    INSERT INTO OPERATION(file_id, date, time, operation, from_name, from_dir, to_name, to_dir)
+    PRAGMA foreign_keys=ON;
+    INSERT INTO OPERATION(file_id, date, time, operation, to_name, to_dir)
       VALUES ($file_id, 
         (SELECT DATE('now','localtime')), 
         (SELECT TIME('now','localtime')),
         (SELECT op_enum_id FROM OPERATION_ENUM WHERE operation='init'),
-        '$filename', $dir_id, '$filename', $dir_id
+        '$filename', $dir_id
       );
       SELECT last_insert_rowid();
     "
   )
 
-echo "Initialized $path into $db. Operations ID: $op_id"
+echo "Initialized file $path into $db. Operations ID: $op_id"
 
