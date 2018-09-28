@@ -41,6 +41,7 @@ if [ "$dir_id" == "" ]; then
 fi
 
 # File table
+# TODO add in a first set of values with /dev/null or some comment from a cli parameter
 file_id=$(
   sqlite3 "$db" "
     PRAGMA foreign_keys=ON;
