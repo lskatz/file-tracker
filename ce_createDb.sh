@@ -23,9 +23,12 @@ sqlite3 "$db" "
   CREATE TABLE IF NOT EXISTS FILE(
     file_id  INTEGER PRIMARY KEY AUTOINCREMENT,
     filename TEXT,
+    dir_id   INTEGER UNIQUE NOT NULL,
     filesize INTEGER,
-    md5sum   TEXT CHECK(length(md5sum) == 32)
+    md5sum   TEXT CHECK(length(md5sum) == 32),
+    FOREIGN KEY(dir_id) REFERENCES DIRECTORY(dir_id)
   );
+  CREATE UNIQUE INDEX filename ON FILE(filename);
 
   CREATE TABLE IF NOT EXISTS DIRECTORY(
     dir_id INTEGER PRIMARY KEY AUTOINCREMENT,

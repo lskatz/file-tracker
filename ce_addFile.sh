@@ -18,18 +18,6 @@ dirname=$(dirname $path)
 filesize=$(wc -c < "$path")
 md5sum=$(md5sum < "$path" | awk '{print $1}')
 
-# File table
-file_id=$(
-  sqlite3 "$db" "
-    PRAGMA foreign_keys=ON;
-
-    INSERT INTO FILE(filename, filesize, md5sum)
-      VALUES ('$filename', '$filesize', '$md5sum');
-
-    SELECT last_insert_rowid();
-  "
-)
-
 # Directory table
 dir_id=$(
   sqlite3 "$db" "
@@ -49,6 +37,18 @@ if [ "$dir_id" == "" ]; then
     "
   )
 fi
+
+# File table
+file_id=$(
+  sqlite3 "$db" "
+    PRAGMA foreign_keys=ON;
+
+    INSERT INTO FILE(filename, dir_id, filesize, md5sum)
+      VALUES ('$filename', '$dir_id', '$filesize', '$md5sum');
+
+    SELECT last_insert_rowid();
+  "
+)
 
 # File operation table
 op_id=$(
