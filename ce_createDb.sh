@@ -49,7 +49,7 @@ sqlite3 "$db" "
     to_dir INTEGER,
     FOREIGN KEY(to_dir) REFERENCES DIRECTORY(dir_id),
     FOREIGN KEY(file_id) REFERENCES FILE(file_id),
-    FOREIGN KEY(operation) REFERENCES ENUM(op_enum_id)
+    FOREIGN KEY(operation) REFERENCES OPERATION_ENUM(op_enum_id)
   );
 
 "
