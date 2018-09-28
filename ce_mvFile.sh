@@ -97,6 +97,7 @@ op_id=$(
         (SELECT op_enum_id FROM OPERATION_ENUM WHERE operation='mv'),
         '$to_filename', $to_dir_id
       );
+    SELECT last_insert_rowid();
   "
 );
 
