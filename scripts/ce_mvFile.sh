@@ -15,7 +15,7 @@ if [ "$newpath" == "" ]; then
 fi
 
 path=$(realpath $path)
-newpath=$(realpath $newpath)
+newpath=$(realpath $(dirname $newpath))/$(basename $newpath)
 
 if [ -d "$newpath" ]; then
   newpath="$newpath/$(basename $path)"
@@ -66,7 +66,7 @@ fi
 
 # Make sure the destination file does not exist
 if [ -e "$newpath" ]; then
-  echo "ERROR: destination already exists!" >&2
+  echo "ERROR: destination already exists! $newpath" >&2
   exit 1
 fi
 # See if the destination dir is writable
