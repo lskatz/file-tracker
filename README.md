@@ -21,5 +21,5 @@ Copy the files to your local drive and set your `PATH` to the scripts folder
     
     # check out the file's history
     ce_history.sh 54.txt
-    # => should see a few entries describing previous names of the file
+    # => should see a few entries describing previous directories of the file
  
